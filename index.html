@@ -3,25 +3,80 @@
 <head>
 <meta charset="UTF-8">
 <style>
-body { margin:0; background:transparent; }
+body { margin:0; background:transparent; font-family: Arial, sans-serif; }
 #timer {
   font-size: 64px;
   color: yellow;
-  font-family: Arial, sans-serif;
   text-shadow: 2px 2px 5px black;
+  position: absolute;
+  top: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+#controls {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+button {
+  font-size: 16px;
+  padding: 5px 10px;
+  border-radius: 4px;
+  border: none;
+  background: rgba(0,0,0,0.5);
+  color: white;
+  cursor: pointer;
+}
+button:hover {
+  background: rgba(0,0,0,0.8);
 }
 </style>
 </head>
 <body>
 <div id="timer">00:00</div>
+<div id="controls">
+  <button id="startBtn">▶</button>
+  <button id="pauseBtn">⏸</button>
+  <button id="resetBtn">⟲</button>
+</div>
+
 <script>
 let seconds = 0;
-setInterval(() => {
-  seconds++;
+let timerInterval = null;
+
+function updateTimer() {
   const m = String(Math.floor(seconds / 60)).padStart(2, '0');
   const s = String(seconds % 60).padStart(2, '0');
   document.getElementById('timer').textContent = `${m}:${s}`;
-}, 1000);
+}
+
+// Start
+document.getElementById('startBtn').addEventListener('click', () => {
+  if (!timerInterval) {
+    timerInterval = setInterval(() => {
+      seconds++;
+      updateTimer();
+    }, 1000);
+  }
+});
+
+// Pause
+document.getElementById('pauseBtn').addEventListener('click', () => {
+  clearInterval(timerInterval);
+  timerInterval = null;
+});
+
+// Reset
+document.getElementById('resetBtn').addEventListener('click', () => {
+  clearInterval(timerInterval);
+  timerInterval = null;
+  seconds = 0;
+  updateTimer();
+});
 </script>
 </body>
 </html>
+
