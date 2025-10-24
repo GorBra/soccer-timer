@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<style>
+body { margin:0; background:transparent; }
+#timer {
+  font-size: 64px;
+  color: yellow;
+  font-family: Arial, sans-serif;
+  text-shadow: 2px 2px 5px black;
+}
+</style>
+</head>
+<body>
+<div id="timer">00:00</div>
+<script>
+let seconds = 0;
+setInterval(() => {
+  seconds++;
+  const m = String(Math.floor(seconds / 60)).padStart(2, '0');
+  const s = String(seconds % 60).padStart(2, '0');
+  document.getElementById('timer').textContent = `${m}:${s}`;
+}, 1000);
+</script>
+</body>
+</html>
